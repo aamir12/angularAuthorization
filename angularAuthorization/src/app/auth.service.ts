@@ -9,6 +9,7 @@ import { catchError } from 'rxjs/operators';
 export class AuthService {
   private _registerUrl = 'http://localhost:3000/api/register';
   private _loginUrl = 'http://localhost:3000/api/login';
+  private _checkEmailUrl = 'http://localhost:3000/api/checkEmailExist';
   constructor(private http: HttpClient, private _router: Router) {}
 
   registerUser(user) {
@@ -54,5 +55,9 @@ export class AuthService {
         break;
     }
     return throwError(errorMessage);
+  }
+
+  checkEmail(email: string) {
+    return this.http.post<boolean>(this._checkEmailUrl, { email });
   }
 }

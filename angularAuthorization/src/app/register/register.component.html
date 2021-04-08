@@ -11,9 +11,9 @@
         </div>
         <div class="card-body">
           <form
+            [formGroup]="signFrm"
             (ngSubmit)="register()"
             autocomplete="off"
-            #f="ngForm"
             class="form"
           >
             <div class="form-group">
@@ -23,22 +23,30 @@
                 name="email"
                 id="email"
                 class="form-control rounded-0"
-                ngModel
-                required
-                email
-                #email="ngModel"
+                formControlName="email"
               />
 
               <small
                 class="text-danger"
                 *ngIf="
-                  email.invalid && email.touched && email.errors['required']
+                  f.email.invalid && f.email.touched && f.email.errors.required
                 "
                 >Please email id</small
               ><small
                 class="text-danger"
-                *ngIf="email.invalid && email.touched && email.errors['email']"
+                *ngIf="
+                  f.email.invalid && f.email.touched && f.email.errors.email
+                "
                 >Please enter valid email id</small
+              >
+              <small
+                class="text-danger"
+                *ngIf="
+                  f.email.invalid &&
+                  f.email.touched &&
+                  f.email.errors.emailTaken
+                "
+                >This Email Id is already registered</small
               >
             </div>
 
@@ -49,19 +57,27 @@
                 name="password"
                 id="password"
                 class="form-control rounded-0"
-                ngModel
-                required
-                #password="ngModel"
+                formControlName="password"
               />
 
               <small
                 class="text-danger"
                 *ngIf="
-                  password.invalid &&
-                  password.touched &&
-                  password.errors['required']
+                  f.password.invalid &&
+                  f.password.touched &&
+                  f.password.errors.required
                 "
                 >Password is required</small
+              >
+
+              <small
+                class="text-danger"
+                *ngIf="
+                  f.password.invalid &&
+                  f.password.touched &&
+                  f.password.errors.minlength
+                "
+                >Password is too small</small
               >
             </div>
             <button type="submit" class="btn btn-primary btn-lg btn-block">

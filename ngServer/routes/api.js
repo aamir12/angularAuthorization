@@ -3,12 +3,11 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const db =
-  "mongodb+srv://<username>:<password>@cluster0.o6yt8.mongodb.net/eventDB?retryWrites=true&w=majority";
+
 // mongoose.Promise = global.Promise;
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(db, {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
@@ -166,6 +165,16 @@ router.post("/login", (req, res) => {
       }
     }
   });
+});
+
+router.post("/checkEmailExist", async (req, res) => {
+  const userExists = await User.findOne({ email: req.body.email });
+
+  if (userExists) {
+    res.status(200).send(true);
+  } else {
+    res.status(200).send(false);
+  }
 });
 
 module.exports = router;

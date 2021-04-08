@@ -8,6 +8,8 @@
 /bazel-out
 
 # dependencies
+angularAuthorization/node_modules/
+ngServer/node_modules/
 /node_modules
 
 # profiling files
@@ -44,4 +46,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+.env
 
